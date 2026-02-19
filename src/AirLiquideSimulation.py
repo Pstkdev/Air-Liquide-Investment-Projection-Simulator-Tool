@@ -29,7 +29,7 @@ class AirLiquideSimulation:
         :param dividend_growth_rate: Expected annual dividend growth rate
         :param years: Duration of the simulation in years
         :param reinvest_dividends:  Whether dividends are reinvested 
-        :param loyalty_bonus: Whether the Air Liquide loyalty bonus is enabled 
+        :param loyalty_bonus: Whether the Air Liquide loyalty bonus is enabled (nominatif)
         :param monthly_investment: Additional fixed monthly investment amount
         """
         self.initial_share_price = initial_share_price
@@ -65,11 +65,45 @@ class AirLiquideSimulation:
     def _total_shares(self) -> int:
         return sum(self.lots.values())
     
-    def eligible_shares(self, year:int) -> int:
+    def _eligible_shares(self, year:int) -> int:
         gap = year-2
+        return sum(shares for y, shares in self.lots.items() if y<=gap)
+    
+    def _apply_free_share_attribution(self, year: int, share_price: float) -> tuple[int, float]:
+        """
+            Share attribution logic (based on the rule quoted by Air Liquide in FICHES PRATIQUES DE L'ACTIONNAIRE 2025):
+            - Only eligible shares (held for >= 2 full calendar years) receive free shares
+            - Base: 1 free share per 10 eligible shares
+            - If loyalty_bonus (nominatif): +10% on free shares => 1 extra free share per 100 eligible shares
+            - Fractions (rompus) are paid in cash
+            Returns: (free_shares_number, rompu_cash_amount)
+        """
+        eligible = self._eligible_shares(year)
         
-    
-    
+        # base case : 1 for 10 
+        base_exact = eligible / 10
+        base_int = eligible // 10
+        base_rompu = (base_exact-base_int) * share_price
+        
+        if not self.loyalty_bonus:
+            return int(base_int), float(base_rompu)
+        
+        # Prime nominatif: +10% on free shares
+        prime_exact = eligible / 100
+        prime_int = eligible // 100
+        prime_rompu = (prime_exact - prime_int) * share_price
+        
+        free_shares = base_int + prime_int
+        rompu = base_rompu + prime_rompu
+        
+        return free_shares,rompu
+        
+        
+    def _is_attribution_year(self, year: int) -> bool:
+        return year % 2 == 0
+
+        
+        
         
     def run_simulation(self) -> pd.DataFrame:
         """Run the simulation and store yearly results in self.results."""
