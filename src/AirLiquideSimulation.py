@@ -10,7 +10,8 @@ class AirLiquideSimulation:
     - optional loyalty bonus (dividend + free shares)
     - optional fixed monthly investment
     """
-    def __init__(self, initial_share_price:float, 
+    def __init__(self, 
+                 initial_share_price:float, 
                  initial_shares:int, 
                  initial_dividend:float, 
                  annual_growth_rate:float, 
@@ -101,15 +102,27 @@ class AirLiquideSimulation:
         
     def _is_attribution_year(self, year: int) -> bool:
         return year % 2 == 0
-
+    
+    
+    def _calculate_dividends(self, year:int, dividend_per_share:float) -> float:
+        total = self._total_shares()
         
+        if not self.loyalty_bonus:
+            return total*dividend_per_share
         
+        eligible = self._eligible_shares(year)
+        not_eligible = total-eligible
+        base_dividend = not_eligible * dividend_per_share
+        prime_dividend = eligible * (dividend_per_share * 1.10)
+        total_dividend = base_dividend + prime_dividend
+        
+        return total_dividend
         
     def run_simulation(self) -> pd.DataFrame:
-        """Run the simulation and store yearly results in self.results."""
+        """Run the simulation and store yearly results in self.results"""
         raise NotImplementedError
         
     def plot_results(self):
-        """Display portfolio value and total shares over time."""
+        """Display portfolio value and total shares over time"""
         raise NotImplementedError
     
