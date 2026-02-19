@@ -55,13 +55,21 @@ class AirLiquideSimulation:
         self.reinvest_dividends = reinvest_dividends
         self.loyalty_bonus = loyalty_bonus
         self.monthly_investment = monthly_investment
-        self.cash = 0.0 # leftover cash because whole shares only
+        
+        self.cash = 0.0 # leftover cash 
+        self.lots = {0: initial_shares} # handle 2 years rule : {year_acquired: shares nb}
         
         self.results: pd.DataFrame | None = None
         
-    def _apply_loyalty_bonus(self, year: int, shares: int, dividends: float) -> tuple[int, float]:
-        """Apply loyalty rules (if enabled) and return updated (shares, dividends)."""
-        raise NotImplementedError
+        
+    def _total_shares(self) -> int:
+        return sum(self.lots.values())
+    
+    def eligible_shares(self, year:int) -> int:
+        gap = year-2
+        
+    
+    
         
     def run_simulation(self) -> pd.DataFrame:
         """Run the simulation and store yearly results in self.results."""
