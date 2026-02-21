@@ -61,9 +61,7 @@ class AirLiquideSimulation:
         self.monthly_investment = monthly_investment
 
         self.cash = 0.0  # leftover cash
-        self.lots = {
-            0: initial_shares
-        }  # handle 2 years rule : {year_acquired: shares nb}
+        self.lots = {0: initial_shares}  # handle 2 years rule : {year_acquired: shares nb}
 
         self.results: pd.DataFrame | None = None
 
@@ -74,9 +72,7 @@ class AirLiquideSimulation:
         gap = year - 2
         return sum(shares for y, shares in self.lots.items() if y <= gap)
 
-    def _apply_free_share_attribution(
-        self, year: int, share_price: float
-    ) -> tuple[int, float]:
+    def _apply_free_share_attribution(self, year: int, share_price: float) -> tuple[int, float]:
         """
         Share attribution logic (based on the rule quoted by Air Liquide in FICHES PRATIQUES DE L'ACTIONNAIRE 2025):
         - Only eligible shares (held for >= 2 full calendar years) receive free shares
@@ -140,7 +136,75 @@ class AirLiquideSimulation:
 
     def run_simulation(self) -> pd.DataFrame:
         """Run the simulation and store yearly results in self.results"""
-        raise NotImplementedError
+        share_price = self.initial_share_price
+        dividend_per_share = self.initial_dividend
+        total_invested = self.initial_shares * self.initial_share_price
+        total_div_received = 0.0
+        self.cash = 0.0
+        self.lots = {0: self.initial_shares}
+        rows = []
+
+        for year in range(1, self.years + 1):
+            share_price *= 1 + self.annual_growth_rate
+            dividend_per_share *= 1 + self.dividend_growth_rate
+
+            annual_dividend = self._calculate_dividends(year, dividend_per_share)
+            total_div_received += annual_dividend
+            self.cash += annual_dividend
+
+            contrib = self.monthly_investment * 12
+            self.cash += contrib
+            total_invested += contrib
+
+            if self._is_attribution_year(year):
+                free_shares_nb, rompu_cash = self._apply_free_share_attribution(year, share_price)
+                self.cash += rompu_cash
+                self.lots[0] += free_shares_nb
+
+            if self.reinvest_dividends:
+                self._buy_shares_with_cash(year, share_price)
+
+            total_shares = self._total_shares()
+            portfolio_value = total_shares * share_price + self.cash
+
+            data = {
+                "Year": year,
+                "Share price": share_price,
+                "Total shares": total_shares,
+                "Cash": self.cash,
+                "Portfolio value": portfolio_value,
+                "Dividends received": annual_dividend,
+                "Total dividends received": total_div_received,
+                "Total invested": total_invested,
+            }
+            rows.append(data)
+
+        self.results = pd.DataFrame(rows)
+
+        # --- Final summary (end of simulation print) ---
+        last = self.results.iloc[-1]  # final year -> last row
+
+        final_portfolio_value = float(last["Portfolio value"])
+        final_shares = int(last["Total shares"])
+        final_cash = float(last["Cash"])
+        total_dividends_received = float(last["Total dividends received"])
+        total_capital_invested = float(last["Total invested"])
+
+        if total_capital_invested > 0:
+            total_return = ((final_portfolio_value - total_capital_invested) / total_capital_invested) * 100
+        else:
+            total_return = 0.0
+
+        print("\n===== Air Liquide Simulation Summary =====")
+        print(f"Final portfolio value: €{final_portfolio_value:,.2f}")
+        print(f"Final number of shares: {final_shares}")
+        print(f"Final cash balance: €{final_cash:,.2f}")
+        print(f"Total dividends received: €{total_dividends_received:,.2f}")
+        print(f"Total capital invested: €{total_capital_invested:,.2f}")
+        print(f"Total return: {total_return:.2f}%")
+        print("========================================\n")
+
+        return self.results
 
     def plot_results(self):
         """Display portfolio value and total shares over time"""
