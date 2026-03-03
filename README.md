@@ -3,22 +3,44 @@
 A **deterministic** projection tool to estimate the long-term growth of an investment in **Air Liquide** shares over a chosen time horizon. 
 This project includes a **Streamlit** interface: users can adjust parameters (growth rates, dividend reinvestment, loyalty bonus, monthly contributions) and see results and charts update instantly.
 
----
-
-## Purpose
-
-- Provide a **clear long-term projection** and help users understand how key assumptions impact outcomes.
-- Keep the model **simple**, readable, and easy to extend (taxes, fees, volatility, more realistic timing, etc.).
+No volatility, randomness, or probabilistic modeling is included.
+Future versions may introduce stochastic modeling (e.g., Monte Carlo simulation).
 
 ---
+
+## Disclaimer
+
+This simulator is designed for educational and illustrative purposes only.
+
+It does not constitute investment advice and does not guarantee any future performance.  
+All projections are based on simplified and deterministic assumptions that may differ significantly from real-world outcomes.
+
+Investing involves risk, including the potential loss of capital.
 
 ## Table of Contents
 
+- [Purpose](#purpose)
+- [Why this project?](#why-this-project)
 - [Features](#features)
 - [Limitations](#limitations)
 - [Installation](#installation)
 - [How to use](#how-to-use)
 
+## Purpose
+
+- Provide a **clear long-term projection** and help users understand how key assumptions impact outcomes.
+- Keep the model **simple**, readable, and easy to extend.
+
+## Why this project?
+
+This project was initially built as a **personal investment tool**.
+
+I wanted:
+- A free and fully customizable simulator.
+- A transparent model I fully understand.
+- A tool reflecting a long-term passive income strategy.
+- The ability to modify assumptions anytime.
+- To share a useful tool with other long-term Air Liquide investors.
 
 ## Features
 
