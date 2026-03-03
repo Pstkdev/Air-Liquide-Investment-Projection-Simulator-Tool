@@ -6,7 +6,6 @@ This project includes a **Streamlit** interface: users can adjust parameters (gr
 **No volatility, randomness, or probabilistic modeling is included.**
 Future versions may introduce stochastic modeling (e.g., Monte Carlo simulation).
 
----
 
 ## Disclaimer
 
@@ -71,8 +70,8 @@ This model approximates Air Liquide’s loyalty program using a simple yearly ap
 <p align="center">
   <img src="assets/loyalty_bonus.png" width="600" alt="Loyalty bonus">
 </p>
----
 
+For more information, check https://airliquide.publispeak.com/2024-shareholders-practical-guide/article/23/
 ## Limitations
 
 This project is designed for **long-term estimation**, not exact forecasting. Real-world results may differ for many reasons:
@@ -83,7 +82,6 @@ This project is designed for **long-term estimation**, not exact forecasting. Re
 - Free share attributions are assumed to occur **regularly every 2 years** (not guaranteed in reality).
 - Simplified cash handling: contributions and dividends are **aggregated yearly** (not modeled month-by-month).
 
----
 
 ## Installation
 
