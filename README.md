@@ -68,6 +68,7 @@ This model approximates Air Liquide’s loyalty program using a simple yearly ap
   - Registered (nominatif) bonus: +10% on free shares
   - Fractions ("rompus") are paid as cash.
 
+<img src="assets/loyalty_bonus.png" width="900">
 ---
 
 ## Limitations
@@ -78,7 +79,7 @@ This project is designed for **long-term estimation**, not exact forecasting. Re
 - No taxes, no broker fees, no spread.
 - The model is **annual**: real timing (dividend payment dates) is not modelled.
 - Free share attributions are assumed to occur **regularly every 2 years** (not guaranteed in reality).
-- Simplified cash handling: contributions and dividends are aggregated yearly (not modeled month-by-month).
+- Simplified cash handling: contributions and dividends are **aggregated yearly** (not modeled month-by-month).
 
 ---
 
