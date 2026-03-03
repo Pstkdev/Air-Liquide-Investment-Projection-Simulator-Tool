@@ -7,7 +7,7 @@ This project includes a **Streamlit** interface: users can adjust parameters (gr
 Future versions may introduce stochastic modeling (e.g., Monte Carlo simulation).
 
 <p align="center">
-  <img src="assets/demo.gif" width="600" alt="demo gif">
+  <img src="assets/demo.gif" width="800" alt="demo gif">
 </p>
 
 
