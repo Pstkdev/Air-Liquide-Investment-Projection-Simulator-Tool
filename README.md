@@ -1,6 +1,7 @@
 # Air Liquide Investment Projection Simulator
 
-A **deterministic** projection tool to estimate the long-term growth of an investment in **Air Liquide** shares over a chosen time horizon. This project includes a **Streamlit** interface: users can adjust parameters (growth rates, dividend reinvestment, loyalty bonus, monthly contributions) and see results and charts update instantly.
+A **deterministic** projection tool to estimate the long-term growth of an investment in **Air Liquide** shares over a chosen time horizon. 
+This project includes a **Streamlit** interface: users can adjust parameters (growth rates, dividend reinvestment, loyalty bonus, monthly contributions) and see results and charts update instantly.
 
 ---
 
@@ -60,8 +61,44 @@ This project is designed for **long-term estimation**, not exact forecasting. Re
 
 ## Installation
 
-### 1) Create a virtual environment
-```bash
-python3 -m venv .venv
-source .venv/bin/activate
-```
+1. Clone the repository:
+2. Go into the project directory:
+    ```bash
+    git clone https://github.com/Pstkdev/Air-Liquide-Investment-Projection-Simulator-Tool.git
+    cd Air-Liquide-Investment-Projection-Simulator-Tool/
+    ```
+3. Create a virtual environment:
+    ```bash
+    python3 -m venv .venv
+    source .venv/bin/activate
+    ```
+4. Install dependencies
+    ```bash 
+        pip install -r requirements.txt
+    ```
+5. Run the app (Streamlit)
+From the project root:
+
+    ```bash 
+        streamlit run app.py
+    ```
+
+Streamlit will display a local URL (often http://localhost:8501).
+
+## How to use
+
+In the sidebar you can set:
+
+- Initial share price, initial shares, initial dividend
+- Annual growth rates (price and dividend)
+- Time horizon (years) and start year (e.g., 2026)
+- Monthly investment amount
+- Toggles:
+    - Reinvest dividends
+    - Loyalty bonus (nominatif + 2-year rule)
+
+The app shows:
+
+- Summary metrics (final value, shares, cash, total dividends, total invested, total return %)
+- Interactive charts (portfolio value, number of shares)
+- A detailed results table
