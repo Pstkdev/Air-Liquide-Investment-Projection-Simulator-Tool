@@ -15,6 +15,9 @@ This project includes a **Streamlit** interface: users can adjust parameters (gr
 ## Table of Contents
 
 - [Features](#features)
+- [Limitations](#limitations)
+- [Installation](#installation)
+- [How to use](#how-to-use)
 
 
 ## Features
@@ -47,14 +50,14 @@ This model approximates Air Liquide’s loyalty program using a simple yearly ap
 
 ---
 
-## Limitations / Key assumptions
+## Limitations
 
 This project is designed for **long-term estimation**, not exact forecasting. Real-world results may differ because:
 
 - No taxes, no broker fees, no spread.
-- The model is **annual**: real timing (dividend payment dates, attribution dates, price at the exact date) is not modelled.
+- The model is **annual**: real timing (dividend payment dates) is not modelled.
 - Free share attributions are assumed to occur **regularly every 2 years** (not guaranteed in reality).
-- No randomness: no volatility, no Monte Carlo, no scenario analysis.
+- No randomness: no volatility.
 
 ---
 
