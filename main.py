@@ -16,8 +16,7 @@ def main():
 
     df = sim.run_simulation()
 
-    # quick check: last 5 years
-    print(df.tail())
+    sim.plot_results()
 
 
 if __name__ == "__main__":

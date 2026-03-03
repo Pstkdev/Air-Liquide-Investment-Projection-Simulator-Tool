@@ -208,4 +208,26 @@ class AirLiquideSimulation:
 
     def plot_results(self):
         """Display portfolio value and total shares over time"""
-        raise NotImplementedError
+        if self.results is None:
+            raise ValueError("No results to plot.")
+
+        years = self.results["Year"]
+        portfolio = self.results["Portfolio value"]
+        shares = self.results["Total shares"]
+
+        plt.figure()
+        plt.plot(years, portfolio)
+        plt.title("Portfolio value over time")
+        plt.xlabel("Year")
+        plt.ylabel("Portfolio value (€)")
+        plt.grid(True)
+        plt.savefig("portfolio_value.png", dpi=150, bbox_inches="tight")
+        plt.close()
+
+        plt.figure()
+        plt.plot(years, shares)
+        plt.xlabel("Year")
+        plt.ylabel("Number of shares")
+        plt.grid(True)
+        plt.savefig("number_of_shares.png", dpi=150, bbox_inches="tight")
+        plt.close()
