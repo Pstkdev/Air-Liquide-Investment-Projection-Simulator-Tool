@@ -18,6 +18,7 @@ annual_growth_rate = st.sidebar.number_input("Annual share price growth rate", m
 dividend_growth_rate = st.sidebar.number_input("Annual dividend growth rate", min_value=0.01, value=0.06, step=0.01)
 
 years = st.sidebar.number_input("Years", min_value=1, value=20, step=1)
+start_year = st.sidebar.number_input("Starting year", min_value=2026, value=2026, step=1)
 
 monthly_investment = st.sidebar.number_input("Monthly investment (€)", min_value=0.0, value=200.0, step=10.0)
 
@@ -32,6 +33,7 @@ sim = AirLiquideSimulation(
     annual_growth_rate=float(annual_growth_rate),
     dividend_growth_rate=float(dividend_growth_rate),
     years=int(years),
+    start_year=int(start_year),
     reinvest_dividends=bool(reinvest_dividends),
     loyalty_bonus=bool(loyalty_bonus),
     monthly_investment=float(monthly_investment),
@@ -39,7 +41,7 @@ sim = AirLiquideSimulation(
 
 df = sim.run_simulation()
 
-# -------- Summary --------
+# ----- Summary -----
 last = df.iloc[-1]
 final_value = float(last["Portfolio value"])
 final_shares = int(last["Total shares"])
@@ -69,11 +71,11 @@ col4.metric("Total free shares received", f"{total_free}")
 
 st.divider()
 
-# -------- Plots (interactive) --------
-fig_value = px.line(df, x="Year", y="Portfolio value", title="Portfolio value over time")
+# ----- Plots -----
+fig_value = px.line(df, x="Calendar year", y="Portfolio value", title="Portfolio value over time")
 st.plotly_chart(fig_value, use_container_width=True)
 
-fig_shares = px.line(df, x="Year", y="Total shares", title="Total shares over time")
+fig_shares = px.line(df, x="Calendar year", y="Total shares", title="Total shares over time")
 st.plotly_chart(fig_shares, use_container_width=True)
 
 st.divider()

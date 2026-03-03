@@ -3,13 +3,6 @@ import matplotlib.pyplot as plt
 
 
 class AirLiquideSimulation:
-    """Deterministic long-term investment simulator for Air Liquide shares.
-    v1:
-    - deterministic annual growth for price and dividend
-    - optional dividend reinvestment
-    - optional loyalty bonus (dividend + free shares)
-    - optional fixed monthly investment
-    """
 
     def __init__(
         self,
@@ -19,6 +12,7 @@ class AirLiquideSimulation:
         annual_growth_rate: float,
         dividend_growth_rate: float,
         years: int,
+        start_year: int,
         reinvest_dividends: bool,
         loyalty_bonus: bool,
         monthly_investment: float,
@@ -55,6 +49,8 @@ class AirLiquideSimulation:
         self.years = years
         if years <= 0:
             raise ValueError("years must be >= 1")
+
+        self.start_year = start_year
 
         self.reinvest_dividends = reinvest_dividends
         self.loyalty_bonus = loyalty_bonus
@@ -147,23 +143,24 @@ class AirLiquideSimulation:
 
         total_shares_0 = self._total_shares()
         portfolio_value_0 = total_shares_0 * share_price + self.cash
-        rows.append
-        (
+        rows.append(
             {
                 "Year": 0,
+                "Calendar year": self.start_year,
                 "Share price": share_price,
                 "Total shares": total_shares_0,
                 "Cash": self.cash,
                 "Portfolio value": portfolio_value_0,
                 "Dividends received": 0.0,
-                "Free shares received": total_free_shares_received,
-                "Total dividends received": total_div_received,
-                "Total free shares received": total_free_shares_received,
+                "Free shares received": 0,
+                "Total dividends received": 0.0,
+                "Total free shares received": 0,
                 "Total invested": total_invested,
             }
         )
 
         for year in range(1, self.years + 1):
+            calendar_year = self.start_year + year
             free_shares_nb = 0
             rompu_cash = 0.0
             share_price *= 1 + self.annual_growth_rate
@@ -191,6 +188,7 @@ class AirLiquideSimulation:
 
             data = {
                 "Year": year,
+                "Calendar year": calendar_year,
                 "Share price": share_price,
                 "Total shares": total_shares,
                 "Cash": self.cash,
