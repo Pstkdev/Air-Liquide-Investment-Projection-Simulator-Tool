@@ -68,7 +68,7 @@ This model approximates Air Liquide’s loyalty program using a simple yearly ap
   - Registered (nominatif) bonus: +10% on free shares
   - Fractions ("rompus") are paid as cash.
 
-<img src="assets/loyalty_bonus.png" width="900">
+<img src="assets/loyalty_bonus.png" width="300">
 ---
 
 ## Limitations
