@@ -1,8 +1,6 @@
 # Air Liquide Investment Projection Simulator
 
-A **deterministic** projection tool to estimate the long-term growth of an investment in **Air Liquide** shares over a chosen time horizon.
-
-The project includes a **Streamlit** interface: users can adjust parameters (growth rates, dividend reinvestment, loyalty bonus, monthly contributions) and see results and charts update instantly.
+A **deterministic** projection tool to estimate the long-term growth of an investment in **Air Liquide** shares over a chosen time horizon. This project includes a **Streamlit** interface: users can adjust parameters (growth rates, dividend reinvestment, loyalty bonus, monthly contributions) and see results and charts update instantly.
 
 ---
 
@@ -13,7 +11,12 @@ The project includes a **Streamlit** interface: users can adjust parameters (gro
 
 ---
 
-## Features (Version 1)
+## Table of Contents
+
+- [Features](#features)
+
+
+## Features
 
 ### Growth model
 - Deterministic annual **share price** growth: `annual_growth_rate`
@@ -31,15 +34,15 @@ The project includes a **Streamlit** interface: users can adjust parameters (gro
 ### Loyalty bonus (registered shares + 2-year rule)
 This model approximates Air Liquide’s loyalty program using a simple yearly approach:
 
-- Loyalty benefits apply to shares held **in registered form (nominatif) for more than two full calendar years**.
+- Loyalty benefits apply to shares held in registered form (nominatif) for more than two full calendar years.
 - Dividends:
   - All shares receive the standard dividend.
-  - **Eligible** shares receive a **+10%** dividend bonus.
+  - Eligible shares receive a +10% dividend bonus.
 - Free share attributions:
-  - Every **2 years**: free shares are granted based on **eligible** shares
-  - Base: **1 free share per 10 eligible shares**
-  - Registered (nominatif) bonus: **+10%** on free shares (equivalent to **+1 free share per 100 eligible shares**)
-  - Fractions (“**rompus**”) are paid as **cash**.
+  - Every 2 years: free shares are granted based on eligible shares
+  - Base: 1 free share per 10 eligible shares
+  - Registered (nominatif) bonus: +10% on free shares (equivalent to +1 free share per 100 eligible shares)
+  - Fractions ("rompus") are paid as cash.
 
 ---
 
