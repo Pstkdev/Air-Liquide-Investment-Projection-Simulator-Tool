@@ -33,8 +33,6 @@ I wanted:
 - A free and fully customizable simulator.
 - A transparent model I fully understand.
 - A tool reflecting a long-term passive income strategy.
-- The ability to modify assumptions anytime.
-- To share a useful tool with other Air Liquide investors.
 
 ## Features
 

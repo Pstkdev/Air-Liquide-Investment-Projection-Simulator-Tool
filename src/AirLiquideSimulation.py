@@ -1,5 +1,4 @@
 import pandas as pd
-import matplotlib.pyplot as plt
 
 
 class AirLiquideSimulation:
@@ -26,6 +25,7 @@ class AirLiquideSimulation:
         :param annual_growth_rate: Expected annual stock price growth rate
         :param dividend_growth_rate: Expected annual dividend growth rate
         :param years: Duration of the simulation in years
+        :param start_year: investing starting year
         :param reinvest_dividends:  Whether dividends are reinvested
         :param loyalty_bonus: Whether the Air Liquide loyalty bonus is enabled (nominatif)
         :param monthly_investment: Additional fixed monthly investment amount

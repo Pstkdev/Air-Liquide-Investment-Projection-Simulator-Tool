@@ -7,7 +7,7 @@ from src.AirLiquideSimulation import AirLiquideSimulation
 st.set_page_config(page_title="Air Liquide Simulator", layout="wide")
 st.title("Air Liquide Investment Projection Simulator")
 
-# ----- Sidebar controls -----
+# ----- Sidebar controls ----- #
 st.sidebar.header("Parameters")
 
 initial_share_price = st.sidebar.number_input("Initial share price (€)", min_value=0.01, value=160.0, step=1.0)
@@ -41,7 +41,7 @@ sim = AirLiquideSimulation(
 
 df = sim.run_simulation()
 
-# ----- Summary -----
+# ----- Summary ----- #
 last = df.iloc[-1]
 final_value = float(last["Portfolio value"])
 final_shares = int(last["Total shares"])
@@ -71,7 +71,7 @@ col4.metric("Total free shares received", f"{total_free}")
 
 st.divider()
 
-# ----- Plots -----
+# ----- Plots ----- #
 fig_value = px.line(df, x="Calendar year", y="Portfolio value", title="Portfolio value over time")
 st.plotly_chart(fig_value, use_container_width=True)
 
