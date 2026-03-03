@@ -6,6 +6,10 @@ This project includes a **Streamlit** interface: users can adjust parameters (gr
 **No volatility, randomness, or probabilistic modeling is included.**
 Future versions may introduce stochastic modeling (e.g., Monte Carlo simulation).
 
+<p align="center">
+  <img src="assets/demo.gif" width="600" alt="demo gif">
+</p>
+
 
 ## Disclaimer
 
