@@ -3,33 +3,28 @@
 A **deterministic** projection tool to estimate the long-term growth of an investment in **Air Liquide** shares over a chosen time horizon. 
 This project includes a **Streamlit** interface: users can adjust parameters (growth rates, dividend reinvestment, loyalty bonus, monthly contributions) and see results and charts update instantly.
 
-No volatility, randomness, or probabilistic modeling is included.
+**No volatility, randomness, or probabilistic modeling is included.**
 Future versions may introduce stochastic modeling (e.g., Monte Carlo simulation).
 
 ---
 
 ## Disclaimer
 
-This simulator is designed for educational and illustrative purposes only.
+**This simulator is designed for educational and illustrative purposes only.**
 
-It does not constitute investment advice and does not guarantee any future performance.  
-All projections are based on simplified and deterministic assumptions that may differ significantly from real-world outcomes.
+**It does not constitute investment advice and does not guarantee any future performance.**  
+**All projections are based on simplified and deterministic assumptions that may differ significantly from real-world outcomes.**
 
-Investing involves risk, including the potential loss of capital.
+**Investing involves risk, including the potential loss of capital.**
 
 ## Table of Contents
 
-- [Purpose](#purpose)
 - [Why this project?](#why-this-project)
 - [Features](#features)
 - [Limitations](#limitations)
 - [Installation](#installation)
 - [How to use](#how-to-use)
 
-## Purpose
-
-- Provide a **clear long-term projection** and help users understand how key assumptions impact outcomes.
-- Keep the model **simple**, readable, and easy to extend.
 
 ## Why this project?
 
@@ -40,7 +35,7 @@ I wanted:
 - A transparent model I fully understand.
 - A tool reflecting a long-term passive income strategy.
 - The ability to modify assumptions anytime.
-- To share a useful tool with other long-term Air Liquide investors.
+- To share a useful tool with other Air Liquide investors.
 
 ## Features
 
@@ -74,12 +69,12 @@ This model approximates Air Liquide’s loyalty program using a simple yearly ap
 
 ## Limitations
 
-This project is designed for **long-term estimation**, not exact forecasting. Real-world results may differ because:
+This project is designed for **long-term estimation**, not exact forecasting. Real-world results may differ for many reasons:
 
+- No randomness: **no volatility**.
 - No taxes, no broker fees, no spread.
 - The model is **annual**: real timing (dividend payment dates) is not modelled.
 - Free share attributions are assumed to occur **regularly every 2 years** (not guaranteed in reality).
-- No randomness: no volatility.
 
 ---
 
@@ -99,8 +94,7 @@ This project is designed for **long-term estimation**, not exact forecasting. Re
     ```bash 
     pip install -r requirements.txt
     ```
-5. Run the app (Streamlit)
-From the project root:
+5. Run the app (Streamlit) from the project root:
 
     ```bash 
     streamlit run app.py
