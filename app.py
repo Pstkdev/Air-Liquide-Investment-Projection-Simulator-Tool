@@ -46,18 +46,26 @@ final_shares = int(last["Total shares"])
 total_div = float(last["Total dividends received"])
 total_invested = float(last["Total invested"])
 final_cash = float(last["Cash"])
+annual_div = float(last["Dividends received"])
+total_free = int(last["Total free shares received"])
 
 total_return = 0.0
 if total_invested > 0:
     total_return = (final_value - total_invested) / total_invested * 100
 
-col1, col2, col3 = st.columns(3)
+col1, col2, col3, col4 = st.columns(4)
+
 col1.metric("Final portfolio value", f"€{final_value:,.2f}")
 col1.metric("Final shares", f"{final_shares}")
+
 col2.metric("Total invested", f"€{total_invested:,.2f}")
 col2.metric("Total dividends received", f"€{total_div:,.2f}")
+
 col3.metric("Final cash", f"€{final_cash:,.2f}")
 col3.metric("Total return", f"{total_return:.2f}%")
+
+col4.metric("Dividend income per year", f"€{annual_div:,.2f}")
+col4.metric("Total free shares received", f"{total_free}")
 
 st.divider()
 

@@ -140,11 +140,32 @@ class AirLiquideSimulation:
         dividend_per_share = self.initial_dividend
         total_invested = self.initial_shares * self.initial_share_price
         total_div_received = 0.0
+        total_free_shares_received = 0
         self.cash = 0.0
         self.lots = {0: self.initial_shares}
         rows = []
 
+        total_shares_0 = self._total_shares()
+        portfolio_value_0 = total_shares_0 * share_price + self.cash
+        rows.append
+        (
+            {
+                "Year": 0,
+                "Share price": share_price,
+                "Total shares": total_shares_0,
+                "Cash": self.cash,
+                "Portfolio value": portfolio_value_0,
+                "Dividends received": 0.0,
+                "Free shares received": total_free_shares_received,
+                "Total dividends received": total_div_received,
+                "Total free shares received": total_free_shares_received,
+                "Total invested": total_invested,
+            }
+        )
+
         for year in range(1, self.years + 1):
+            free_shares_nb = 0
+            rompu_cash = 0.0
             share_price *= 1 + self.annual_growth_rate
             dividend_per_share *= 1 + self.dividend_growth_rate
 
@@ -160,6 +181,7 @@ class AirLiquideSimulation:
                 free_shares_nb, rompu_cash = self._apply_free_share_attribution(year, share_price)
                 self.cash += rompu_cash
                 self.lots[0] += free_shares_nb
+                total_free_shares_received += free_shares_nb
 
             if self.reinvest_dividends:
                 self._buy_shares_with_cash(year, share_price)
@@ -174,34 +196,13 @@ class AirLiquideSimulation:
                 "Cash": self.cash,
                 "Portfolio value": portfolio_value,
                 "Dividends received": annual_dividend,
+                "Free shares received": free_shares_nb,
                 "Total dividends received": total_div_received,
+                "Total free shares received": total_free_shares_received,
                 "Total invested": total_invested,
             }
             rows.append(data)
 
         self.results = pd.DataFrame(rows)
-
-        # --- Final summary (end of simulation print) ---
-        last = self.results.iloc[-1]  # final year -> last row
-
-        final_portfolio_value = float(last["Portfolio value"])
-        final_shares = int(last["Total shares"])
-        final_cash = float(last["Cash"])
-        total_dividends_received = float(last["Total dividends received"])
-        total_capital_invested = float(last["Total invested"])
-
-        if total_capital_invested > 0:
-            total_return = ((final_portfolio_value - total_capital_invested) / total_capital_invested) * 100
-        else:
-            total_return = 0.0
-
-        print("\n===== Air Liquide Simulation Summary =====")
-        print(f"Final portfolio value: €{final_portfolio_value:,.2f}")
-        print(f"Final number of shares: {final_shares}")
-        print(f"Final cash balance: €{final_cash:,.2f}")
-        print(f"Total dividends received: €{total_dividends_received:,.2f}")
-        print(f"Total capital invested: €{total_capital_invested:,.2f}")
-        print(f"Total return: {total_return:.2f}%")
-        print("========================================\n")
 
         return self.results
