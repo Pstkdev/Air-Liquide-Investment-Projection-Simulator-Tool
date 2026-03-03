@@ -22,8 +22,8 @@ start_year = st.sidebar.number_input("Starting year", min_value=2026, value=2026
 
 monthly_investment = st.sidebar.number_input("Monthly investment (€)", min_value=0.0, value=200.0, step=10.0)
 
-reinvest_dividends = st.sidebar.checkbox("Reinvest dividends", value=True)
-loyalty_bonus = st.sidebar.checkbox("Loyalty bonus (nominatif + 2 year rule)", value=True)
+reinvest_dividends = st.sidebar.checkbox("Reinvest dividends", value=False)
+loyalty_bonus = st.sidebar.checkbox("Loyalty bonus (nominatif + 2 year rule)", value=False)
 
 
 sim = AirLiquideSimulation(

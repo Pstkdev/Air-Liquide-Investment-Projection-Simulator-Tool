@@ -56,7 +56,8 @@ class AirLiquideSimulation:
         self.loyalty_bonus = loyalty_bonus
         self.monthly_investment = monthly_investment
 
-        self.cash = 0.0  # leftover cash
+        self.cash_dividends = 0.0
+        self.cash_contrib = 0.0
         self.lots = {0: initial_shares}  # handle 2 years rule : {year_acquired: shares nb}
 
         self.results: pd.DataFrame | None = None
@@ -114,42 +115,48 @@ class AirLiquideSimulation:
 
         return total_dividend
 
-    def _buy_shares_with_cash(self, year: int, share_price: float) -> tuple[int, float]:
+    def _buy_shares_with_amount(self, year: int, share_price: float, amount: float) -> float:
 
         if share_price <= 0:
             raise ValueError("Share price must be > 0")
 
-        if self.cash < share_price:
-            return 0, 0.0
+        if amount < share_price:
+            return amount
 
-        shares_bought = int(self.cash // share_price)
-        cash_spent = shares_bought * share_price
-        self.cash -= cash_spent
+        shares_bought = int(amount // share_price)
+        spent = shares_bought * share_price
+        remaining = amount - spent
 
-        self.lots[year] = self.lots.get(year, 0) + shares_bought
+        if shares_bought > 0:
+            self.lots[year] = self.lots.get(year, 0) + shares_bought
 
-        return shares_bought, cash_spent
+        return remaining
 
     def run_simulation(self) -> pd.DataFrame:
         """Run the simulation and store yearly results in self.results"""
         share_price = self.initial_share_price
         dividend_per_share = self.initial_dividend
+
         total_invested = self.initial_shares * self.initial_share_price
         total_div_received = 0.0
         total_free_shares_received = 0
-        self.cash = 0.0
-        self.lots = {0: self.initial_shares}
-        rows = []
 
+        self.lots = {0: self.initial_shares}
+        self.cash_dividends = 0.0
+        self.cash_contrib = 0.0
+
+        rows = []
+        # Year 0
         total_shares_0 = self._total_shares()
-        portfolio_value_0 = total_shares_0 * share_price + self.cash
+        portfolio_value_0 = total_shares_0 * share_price
+
         rows.append(
             {
                 "Year": 0,
                 "Calendar year": self.start_year,
                 "Share price": share_price,
                 "Total shares": total_shares_0,
-                "Cash": self.cash,
+                "Cash": 0.0,
                 "Portfolio value": portfolio_value_0,
                 "Dividends received": 0.0,
                 "Free shares received": 0,
@@ -161,46 +168,58 @@ class AirLiquideSimulation:
 
         for year in range(1, self.years + 1):
             calendar_year = self.start_year + year
+
+            # Reset per-year
             free_shares_nb = 0
             rompu_cash = 0.0
+
+            # Update price and dividend growth
             share_price *= 1 + self.annual_growth_rate
             dividend_per_share *= 1 + self.dividend_growth_rate
 
+            # Dividends
             annual_dividend = self._calculate_dividends(year, dividend_per_share)
             total_div_received += annual_dividend
-            self.cash += annual_dividend
+            self.cash_dividends += annual_dividend
 
+            # Monthly contributions
             contrib = self.monthly_investment * 12
-            self.cash += contrib
             total_invested += contrib
+            self.cash_contrib += contrib
 
+            # Free share attribution
             if self._is_attribution_year(year):
                 free_shares_nb, rompu_cash = self._apply_free_share_attribution(year, share_price)
-                self.cash += rompu_cash
+                self.cash_dividends += rompu_cash
                 self.lots[0] += free_shares_nb
                 total_free_shares_received += free_shares_nb
 
+            # Always invest contributions
+            self.cash_contrib = self._buy_shares_with_amount(year, share_price, self.cash_contrib)
+
+            # Invest dividends if enabled
             if self.reinvest_dividends:
-                self._buy_shares_with_cash(year, share_price)
+                self.cash_dividends = self._buy_shares_with_amount(year, share_price, self.cash_dividends)
 
             total_shares = self._total_shares()
-            portfolio_value = total_shares * share_price + self.cash
+            cash_total = self.cash_contrib + self.cash_dividends
+            portfolio_value = total_shares * share_price + cash_total
 
-            data = {
-                "Year": year,
-                "Calendar year": calendar_year,
-                "Share price": share_price,
-                "Total shares": total_shares,
-                "Cash": self.cash,
-                "Portfolio value": portfolio_value,
-                "Dividends received": annual_dividend,
-                "Free shares received": free_shares_nb,
-                "Total dividends received": total_div_received,
-                "Total free shares received": total_free_shares_received,
-                "Total invested": total_invested,
-            }
-            rows.append(data)
+            rows.append(
+                {
+                    "Year": year,
+                    "Calendar year": calendar_year,
+                    "Share price": share_price,
+                    "Total shares": total_shares,
+                    "Cash": cash_total,
+                    "Portfolio value": portfolio_value,
+                    "Dividends received": annual_dividend,
+                    "Free shares received": free_shares_nb,
+                    "Total dividends received": total_div_received,
+                    "Total free shares received": total_free_shares_received,
+                    "Total invested": total_invested,
+                }
+            )
 
         self.results = pd.DataFrame(rows)
-
         return self.results
