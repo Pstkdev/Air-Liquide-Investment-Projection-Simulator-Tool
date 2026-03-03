@@ -45,12 +45,15 @@ I wanted:
 
 ### Cash & purchases (no fractional shares)
 - Shares are purchased as **whole integers only**.
-- Leftover cash (dividends, "rompus", remaining cash after purchases) is tracked in **Cash**.
+- Leftover cash is tracked (includes remainders from contributions + dividends/"rompus" if not reinvested).
 
 ### Investing
 - Fixed monthly contribution: `monthly_investment`
-- Reinvesting dividends option: `reinvest_dividends`
-  - If enabled: available cash is used to buy whole shares and any remainder stays as cash.
+    - Monthly contributions are always used to buy whole shares. Any remainder stays as cash.
+- Dividend reinvestment option: `reinvest_dividends`
+  - If enabled: dividends (and "rompus") are also reinvested into whole shares.
+  - If disabled: dividends (and "rompus") remain as cash.
+
 
 ### Loyalty bonus
 This model approximates Air Liquide’s loyalty program using a simple yearly approach:
@@ -75,6 +78,7 @@ This project is designed for **long-term estimation**, not exact forecasting. Re
 - No taxes, no broker fees, no spread.
 - The model is **annual**: real timing (dividend payment dates) is not modelled.
 - Free share attributions are assumed to occur **regularly every 2 years** (not guaranteed in reality).
+- Simplified cash handling: contributions and dividends are aggregated yearly (not modeled month-by-month).
 
 ---
 
