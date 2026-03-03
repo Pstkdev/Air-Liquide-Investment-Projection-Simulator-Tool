@@ -57,12 +57,12 @@ I wanted:
 ### Loyalty bonus
 This model approximates Air Liquide’s loyalty program using a simple yearly approach:
 
-- Loyalty benefits apply to shares held in registered form (nominatif) for more than **two full calendar years**.
+- Loyalty benefits apply to shares held in **registered form** (nominatif in french) for more than **two full calendar years**.
 - Dividends:
   - All shares receive the standard dividend.
-  - Eligible shares receive a +10% dividend bonus.
+  - Eligible shares receive a **+10% dividend bonus**.
 - Free share attributions:
-  - Every 2 years: free shares are granted based on eligible shares
+  - **Every 2 years**: free shares are granted based on eligible shares
   - Base: 1 free share per 10 eligible shares
   - Registered (nominatif) bonus: +10% on free shares
   - Fractions ("rompus") are paid as cash.
@@ -80,7 +80,7 @@ This project is designed for **long-term estimation**, not exact forecasting. Re
 - No taxes, no broker fees, no spread.
 - The model is **annual**: real timing (dividend payment dates) is not modelled.
 - Free share attributions are assumed to occur **regularly every 2 years** (not guaranteed in reality).
-- Simplified cash handling: contributions and dividends are **aggregated yearly** (not modeled month-by-month).
+- Simplified cash handling: contributions and dividends are **aggregated yearly** (not by month).
 
 
 ## Installation
@@ -105,7 +105,7 @@ This project is designed for **long-term estimation**, not exact forecasting. Re
     streamlit run app.py
     ```
 
-Streamlit will display a local URL (often http://localhost:8501).
+Streamlit will display a local URL.
 
 ## How to use
 
@@ -121,6 +121,6 @@ In the sidebar you can set:
 
 The app shows:
 
-- Summary metrics (final value, shares, cash, total dividends, total invested, total return %)
-- Interactive charts (portfolio value, number of shares)
+- Summary metrics (final portfolio value, number of shares, ...)
+- Interactive charts
 - A detailed results table
