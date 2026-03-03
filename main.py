@@ -16,8 +16,6 @@ def main():
 
     df = sim.run_simulation()
 
-    sim.plot_results()
-
 
 if __name__ == "__main__":
     main()
