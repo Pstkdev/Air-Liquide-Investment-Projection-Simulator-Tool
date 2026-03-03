@@ -32,17 +32,17 @@ This project includes a **Streamlit** interface: users can adjust parameters (gr
 - Reinvesting dividends option: `reinvest_dividends`
   - If enabled: available cash is used to buy whole shares and any remainder stays as cash.
 
-### Loyalty bonus (registered shares + 2-year rule)
+### Loyalty bonus
 This model approximates Air Liquide’s loyalty program using a simple yearly approach:
 
-- Loyalty benefits apply to shares held in registered form (nominatif) for more than two full calendar years.
+- Loyalty benefits apply to shares held in registered form (nominatif) for more than **two full calendar years**.
 - Dividends:
   - All shares receive the standard dividend.
   - Eligible shares receive a +10% dividend bonus.
 - Free share attributions:
   - Every 2 years: free shares are granted based on eligible shares
   - Base: 1 free share per 10 eligible shares
-  - Registered (nominatif) bonus: +10% on free shares (equivalent to +1 free share per 100 eligible shares)
+  - Registered (nominatif) bonus: +10% on free shares
   - Fractions ("rompus") are paid as cash.
 
 ---
@@ -51,18 +51,16 @@ This model approximates Air Liquide’s loyalty program using a simple yearly ap
 
 This project is designed for **long-term estimation**, not exact forecasting. Real-world results may differ because:
 
-- **No taxes**, no broker fees, no spread, no withholding taxes.
+- No taxes, no broker fees, no spread.
 - The model is **annual**: real timing (dividend payment dates, attribution dates, price at the exact date) is not modelled.
 - Free share attributions are assumed to occur **regularly every 2 years** (not guaranteed in reality).
-- Loyalty rules are a **simplified** representation to keep the model readable.
 - No randomness: no volatility, no Monte Carlo, no scenario analysis.
 
 ---
 
 ## Installation
 
-1. Clone the repository:
-2. Go into the project directory:
+1. Clone the repository and go into the project directory:
     ```bash
     git clone https://github.com/Pstkdev/Air-Liquide-Investment-Projection-Simulator-Tool.git
     cd Air-Liquide-Investment-Projection-Simulator-Tool/
@@ -74,13 +72,13 @@ This project is designed for **long-term estimation**, not exact forecasting. Re
     ```
 4. Install dependencies
     ```bash 
-        pip install -r requirements.txt
+    pip install -r requirements.txt
     ```
 5. Run the app (Streamlit)
 From the project root:
 
     ```bash 
-        streamlit run app.py
+    streamlit run app.py
     ```
 
 Streamlit will display a local URL (often http://localhost:8501).
