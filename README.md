@@ -1,5 +1,10 @@
 # Air Liquide Investment Projection Simulator
 
+![Python](https://img.shields.io/badge/Python-3.12-orange?logo=python&logoColor=white)
+![Streamlit](https://img.shields.io/badge/Streamlit-App-red?logo=streamlit&logoColor=white)
+![Pandas](https://img.shields.io/badge/Pandas-Data%20Analysis-green?logo=pandas&logoColor=white)
+![Plotly](https://img.shields.io/badge/Plotly-Visualization-purple?logo=plotly&logoColor=white)
+
 A **deterministic** projection tool to estimate the long-term growth of an investment in **Air Liquide** shares over a chosen time horizon. 
 This project includes a **Streamlit** interface: users can adjust parameters (growth rates, dividend reinvestment, loyalty bonus, monthly contributions) and see results and charts update instantly.
 
